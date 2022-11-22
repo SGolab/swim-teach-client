@@ -1,0 +1,70 @@
+{
+  "stage": {
+    "title": "PURE BASICS",
+    "subjects": [
+      {
+        "title": "LEG MOVEMENT",
+        "skills": [
+          {
+            "title": "KICKING ON WALL",
+            "description": "SAMPLE DESC",
+            "url": "SAMPLE URL",
+            "status": "ACQUIRED"
+          },
+          {
+            "title": "KICKING HOLDING WALL",
+            "description": "SAMPLE DESC",
+            "url": "SAMPLE URL",
+            "status": "ACQUIRED"
+          },
+          {
+            "title": "KICKING WITH BOARD",
+            "description": "SAMPLE DESC",
+            "url": "SAMPLE URL",
+            "status": "TRAINED"
+          }
+        ]
+      },
+      {
+        "title": "ARM MOVEMENT",
+        "skills": [
+          {
+            "title": "MOVING ARMS SWIMMING WITH BOARD ON BACK",
+            "description": "SAMPLE DESC",
+            "url": "SAMPLE URL",
+            "status": "NOT_TRAINED"
+          },
+          {
+            "title": "MOVING ARMS SWIMMING WITH BOARD ON STOMACH",
+            "description": "SAMPLE DESC",
+            "url": "SAMPLE URL",
+            "status": "NOT_TRAINED"
+          }
+        ]
+      },
+      {
+        "title": "DIVING",
+        "skills": [
+          {
+            "title": "DIVING HEAD VERTICALLY",
+            "description": "SAMPLE DESC",
+            "url": "SAMPLE URL",
+            "status": "ACQUIRED"
+          },
+          {
+            "title": "DIVING HEAD HORIZONTALLY",
+            "description": "SAMPLE DESC",
+            "url": "SAMPLE URL",
+            "status": "ACQUIRED"
+          },
+          {
+            "title": "BUOY EXERCISE",
+            "description": "SAMPLE DESC",
+            "url": "SAMPLE URL",
+            "status": "TRAINED"
+          }
+        ]
+      }
+    ]
+  }
+}

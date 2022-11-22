@@ -1,0 +1,115 @@
+.skill-card-details {
+    position: fixed;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 5fr;
+
+    z-index: 100;
+
+    /*width: 80vw;*/
+    height: 80vh;
+
+    aspect-ratio: 4/3;
+
+    background-color: #fbeee0;
+    outline: 5px solid #422800;
+    outline-offset: -2.5px;
+    border-radius: 30px;
+    box-shadow: #422800 4px 4px 0 0;
+    /*color: #422800;*/
+    /*cursor: pointer;*/
+    /*font-weight: 600;*/
+    /*font-size: 20px;*/
+    /*padding: 0 18px;*/
+    /*line-height: 50px;*/
+    /*text-decoration: none;*/
+    /*user-select: none;*/
+    /*-webkit-user-select: none;*/
+    /*touch-action: manipulation;*/
+
+    overflow: hidden;
+}
+
+.skill-card-details-header {
+    grid-column: 1/3;
+    grid-row: 1/1;
+
+    padding: 3% 3%;
+
+    outline: inherit;
+    outline-offset: inherit;
+
+    display: flex;
+    align-items: center;
+}
+
+.skill-card-details-header > h1 {
+    font-size: 3em;
+    margin: 0;
+}
+
+.image-container {
+    display: flex;
+
+    position: absolute;
+    right: 5%;
+    bottom: 5%;
+
+    width: 20%;
+
+    align-items: center;
+
+    overflow: hidden;
+}
+
+.image {
+    max-width: 100%;
+    max-height: 100%;
+    content: url('/images/correct-icon.webp');
+}
+
+.description-container {
+    padding: 5%;
+
+    outline: inherit;
+    outline-offset: inherit;
+
+    overflow: scroll;
+}
+
+.description-container > p {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.video-container {
+
+    outline: inherit;
+    outline-offset: inherit;
+
+    padding: 5%;
+}
+
+.video-container > iframe {
+    aspect-ratio: 16/9;
+    width: 100%;
+}
+
+.exit-button {
+    position: absolute;
+
+    top: 1.5%;
+    right: 1.5%;
+
+    height: 5%;
+    aspect-ratio: 1/1;
+
+    border-radius: 30px;
+
+    background-color: red;
+}
+
+.exit-button:hover {
+    transform: scale(1.2);
+}
