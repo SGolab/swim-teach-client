@@ -5,14 +5,9 @@ const centerButton = document.querySelector('#center-button');
 const zoomInButton = document.querySelector('#zoom-in-button');
 const zoomOutButton = document.querySelector('#zoom-out-button');
 
-const zoomElement = document.querySelector('#drag-zoom-item')
-
 centerButton.addEventListener('click', () => {
-
     clearTranslation()
     clearZoom()
-
-    zoomElement.style.transform = '';
 })
 
 zoomInButton.addEventListener('click', () => {

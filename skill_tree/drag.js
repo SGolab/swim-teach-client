@@ -8,8 +8,7 @@ let savedTranslationY = 0;
 let baseTranslationX = 0;
 let baseTranslationY = 0;
 
-let viewElement = document.querySelector('.screen')
-let draggedElement = document.querySelector('#drag-zoom-item');
+let viewElement
 
 const mouseDownHandler = function (e) {
     viewElement.style.cursor = 'grabbing';
@@ -38,6 +37,7 @@ const mouseMoveHandler = function (e) {
     //apply transformation style
     let transformation = `scale(${getZoom()}) translateX(${effectiveTranslationX}px) translateY(${effectiveTranslationY}px)`;
 
+    let draggedElement = document.querySelector('#drag-zoom-item');
     draggedElement.style.transform = transformation;
 };
 
@@ -68,6 +68,9 @@ export function getSavedBaseTranslationY() {
 }
 
 export function enableDragging() {
+
+    viewElement = document.querySelector('.tree-view')
+
     console.log('enabled dragging')
     viewElement.style.cursor = 'grab';
     viewElement.addEventListener('mousedown', mouseDownHandler)
@@ -78,5 +81,3 @@ export function disableDragging() {
     viewElement.style.cursor = 'default';
     viewElement.removeEventListener('mousedown', mouseDownHandler)
 }
-
-viewElement.addEventListener('mousedown', mouseDownHandler);

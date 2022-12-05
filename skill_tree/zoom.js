@@ -1,12 +1,8 @@
 import {getSavedBaseTranslationX, getSavedBaseTranslationY} from './drag.js'
 
-const zoomElement = document.querySelector('#drag-zoom-item');
+let zoomElement = document.querySelector('#drag-zoom-item');
 let zoom = 1;
-const ZOOM_SPEED = 0.1;
-
-const zoomEventListener = function(e) {
-    zoomInOut(e.deltaY)
-}
+let ZOOM_SPEED = 0.1;
 
 export function zoomInOut(deltaY) {
 
@@ -25,15 +21,30 @@ export function zoomInOut(deltaY) {
 
     let transformation = `scale(${zoom}) translateX(${effectiveTranslationX}px) translateY(${effectiveTranslationY}px)`;
 
+    let zoomElement = document.querySelector('#drag-zoom-item')
     zoomElement.style.transform = transformation;
 }
 
 export function enableZoom() {
+    if (zoomElement === undefined) {
+        zoomElement = document.querySelector('#drag-zoom-item')
+    }
+
+    if (zoom === undefined) {
+        zoom = 1
+    }
+
+    if (ZOOM_SPEED === undefined) {
+        ZOOM_SPEED = 0.1
+    }
+
     document.addEventListener("wheel", zoomEventListener)
+    console.log('enabled zooming')
 }
 
 export function disableZoom() {
     document.removeEventListener("wheel", zoomEventListener)
+    console.log('disabled zooming')
 }
 
 export function getZoom() {
@@ -42,9 +53,13 @@ export function getZoom() {
 
 export function clearZoom() {
     zoom = 1;
+
+    zoomElement = document.querySelector('#drag-zoom-item')
+    zoomElement.style.transform = '';
 }
 
-document.addEventListener("wheel", zoomEventListener)
-
+const zoomEventListener = function(e) {
+    zoomInOut(e.deltaY)
+}
 
 

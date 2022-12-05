@@ -1,22 +1,17 @@
-body {
-    overflow: hidden;
-}
+.tree-view {
+    height: 100%;
+    width: 100%;
 
-.screen {
     display: flex;
+
+    flex-shrink: 0;
+    flex-grow: 0;
 
     justify-content: center;
     align-items: center;
-
-    width: 100vw;
-    height: 100vh;
-
-    overflow: hidden;
-
-    background-color: lightskyblue;
 }
 
-.background {
+.tree-view .background {
     display: flex;
 
     flex-shrink: 0;
@@ -28,29 +23,29 @@ body {
     width: 400%;
     height: 400%;
 
-    background-image: url('/images/water-background.webp');
+    background-image: url('../../images/water-background.webp');
     background-size: cover;
 }
 
-.button-grid {
-    position: fixed;
+.tree-view .button-grid {
+    position: absolute;
     z-index: 50;
 
     row-gap: 1vh;
     column-gap: 1vw;
 
-    left: 2vw;
+    right: 2vw;
     top: 1vw;
 
     display: grid;
     column-count: 4;
 }
 
-#center-button {
+.tree-view #center-button {
     grid-column: 1/3;
 }
 
-.control-button {
+.tree-view .control-button {
     background-color: #fbeee0;
     border: 2px solid #422800;
     border-radius: 30px;
@@ -69,20 +64,15 @@ body {
     touch-action: manipulation;
 }
 
-.control-button:hover {
+.tree-view .control-button:hover {
     background-color: #fff;
 }
 
-.control-button:active {
-    box-shadow: #422800 2px 2px 0 0;
-    transform: translate(2px, 2px);
-}
-
-.main-container {
+.tree-view .tree-container {
     display: flex;
 
-    border-radius: 10px;
-    border: solid 5px black;
+    border-radius: 30px;
+    border: solid 10px black;
 
     background-color: rgba(204, 255, 255, .5);
 
@@ -91,12 +81,12 @@ body {
     padding: 50px;
 }
 
-.main-container > .tree {
+.tree-view .tree-container > .tree {
     gap: 150px;
     outline: 0;
 }
 
-.tree {
+.tree-view .tree {
     position: relative;
 
     display: flex;
@@ -113,7 +103,7 @@ body {
     outline: dotted black 3px;
 }
 
-.label {
+.tree-view .label {
     position: absolute;
 
     text-align: center;
@@ -122,21 +112,7 @@ body {
     top: -25px;
 }
 
-.branch > .label {
-    /*outline: solid black 1px;*/
-
-    width: 100%;
-
-    font-size: 32px;
-
-    left: 0;
-    top: -40px;
-
-    /*transform: rotate(270deg);*/
-    /*transform-origin: top left;*/
-}
-
-.branch {
+.tree-view .branch {
     position: relative;
     
     display: flex;
@@ -152,6 +128,11 @@ body {
     outline: solid black 3px;
 }
 
-svg {
-    position: absolute;
+.tree-view .branch > .label {
+    width: 100%;
+
+    font-size: 32px;
+
+    left: 0;
+    top: -40px;
 }
