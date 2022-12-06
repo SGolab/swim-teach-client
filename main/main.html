@@ -1,51 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Main</title>
-  <link rel="stylesheet" type="text/css" href="/main/main-style.css"/>
+    <meta charset="UTF-8">
+    <title>Main</title>
+    <link rel="stylesheet" type="text/css" href="/main/main-style.css"/>
 
-<!--  skill tree-->
-  <link rel="stylesheet" type="text/css" href="/skill_tree/css/tree-style.css"/>
-  <link rel="stylesheet" type="text/css" href="/skill_tree/css/skill-card-style.css"/>
-  <link rel="stylesheet" type="text/css" href="/skill_tree/css/skill-card-details-style.css"/>
+    <!--  skill tree-->
+    <link rel="stylesheet" type="text/css" href="/skill_tree/css/tree-style.css"/>
+    <link rel="stylesheet" type="text/css" href="/skill_tree/css/skill-card-style.css"/>
+    <link rel="stylesheet" type="text/css" href="/skill_tree/css/skill-card-details-style.css"/>
 
-  <link rel="stylesheet" type="text/css" href="/skill_tree/css/tree-alt-style.css"/>
+    <link rel="stylesheet" type="text/css" href="/skill_tree/css/tree-alt-style.css"/>
 
-  <!--  goals-->
-  <link rel="stylesheet" type="text/css" href="/goals/goals-view-style.css"/>
+    <!--  goals-->
+    <link rel="stylesheet" type="text/css" href="/goals/goals-view-style.css"/>
 
-  <script src="https://kit.fontawesome.com/d1b61bc5da.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/d1b61bc5da.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
 <div class="screen">
 
-  <div class="header">
-    <button id="open-menu-button">
-      <i class="fa-solid fa-list fa-2xl"></i>
-    </button>
-    <h1>SWIM TEACH APP</h1>
-  </div>
+    <div class="header">
+        <h1>SWIM TEACH APP</h1>
 
-  <div class="left-panel">
-    <div class="panel-item">
-      <i class="fa-solid fa-tree"></i>
-      <span>SKILL TREE</span>
-      <button id="change-tree-view-button">
-        <i class="fa-solid fa-tree fa-xl"></i>
-      </button>
+        <div class="panel">
+            <div class="panel-item" id="tree-view-button">
+                <i class="fa-solid fa-tree fa-2xl"></i>
+            </div>
+            <div class="panel-item" id="tree-view-alt-button">
+                <i class="fa-solid fa-tree fa-2xl"></i>
+            </div>
+            <div class="panel-item" id="goals-button">
+                <i class="fa-solid fa-bullseye fa-2xl"></i>
+            </div>
+            <div class="panel-item" id="lesson-history-button">
+                <i class="fa-solid fa-book fa-2xl"></i>
+            </div>
+        </div>
     </div>
-    <div class="panel-item">
-      <i class="fa-solid fa-bullseye"></i>  <span>GOALS</span>
-    </div>
-    <div class="panel-item">
-      <i class="fa-solid fa-book"></i>
-      <span>LESSON HISTORY</span>
-    </div>
-  </div>
-
-  <div class="main-container"></div>
+    <div class="background"></div>
+    <div class="main-container"></div>
 </div>
 
 <script type="module" src="../main/main.js"></script>

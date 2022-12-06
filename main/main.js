@@ -1,55 +1,39 @@
 import {fetchSkillTreeData, fetchGoalsData} from "./data-fetching.js";
 import {renderTreeView} from "../skill_tree/skill-tree.js";
 import {renderGoalView} from "../goals/goals-loader.js";
-import {renderTreeViewAlternative} from "../skill_tree/skill-tree-alternative.js";
+import {renderTreeViewAlternative} from "../skill_tree/skill-tree-alt.js";
 
-let panel = document.querySelector('.left-panel');
 let mainContainer = document.querySelector('.main-container')
+let background = document.querySelector('.background')
 
-let openMenuButton = document.querySelector('#open-menu-button')
+let treeViewBtn = document.querySelector('#tree-view-button');
+let treeViewAltBtn = document.querySelector('#tree-view-alt-button');
+let goalsBtn = document.querySelector('#goals-button');
+let lessonHistoryBtn = document.querySelector('#lesson-history-button');
 
-openMenuButton.addEventListener('click', () => {
-    if (panel.style.display === 'block') {
-        panel.style.display = 'none'
-        mainContainer.style.gridColumn = '1/3'
-    } else {
-        panel.style.display = 'block'
-        mainContainer.style.gridColumn = '2/3'
-    }
+treeViewBtn.addEventListener('click', async () => {
+    mainContainer.innerHTML = ''
+    const skillTreeDataJson = await fetchSkillTreeData()
+    renderTreeView(mainContainer, skillTreeDataJson)
 })
 
-let skillTreeAlternative = false;
-
-let panelItems = document.querySelectorAll('.panel-item')
-panelItems.forEach(i => {
-    i.addEventListener('click', async () => {
-
-        mainContainer.innerHTML = ''
-
-        switch (i.innerText) {
-            case 'SKILL TREE':
-
-                const skillTreeDataJson = await fetchSkillTreeData()
-
-                console.log(skillTreeDataJson)
-
-                if (skillTreeAlternative) {
-                    renderTreeViewAlternative(mainContainer, skillTreeDataJson)
-                } else {
-                    renderTreeView(mainContainer, skillTreeDataJson)
-                }
-
-                break
-            case 'GOALS':
-                const goalDataJson = await fetchGoalsData()
-                renderGoalView(mainContainer, goalDataJson)
-                break;
-        }
-    })
+treeViewAltBtn.addEventListener('click', async () => {
+    mainContainer.innerHTML = ''
+    const skillTreeDataJson = await fetchSkillTreeData()
+    renderTreeViewAlternative(mainContainer, skillTreeDataJson)
 })
 
-let toggleViewButton = document.querySelector('#change-tree-view-button')
-toggleViewButton.addEventListener('click', () => {
-    skillTreeAlternative = !skillTreeAlternative;
+goalsBtn.addEventListener('click', async () => {
+    mainContainer.innerHTML = ''
+    const goalDataJson = await fetchGoalsData()
+    renderGoalView(mainContainer, goalDataJson)
 })
 
+const dotsImg = document.createElement('div')
+dotsImg.classList.add('dots-img')
+
+const img = document.createElement('img')
+img.src = '../images/dots.png'
+dotsImg.appendChild(img)
+
+background.appendChild(dotsImg)
