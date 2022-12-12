@@ -61,6 +61,17 @@ export function createH1(title) {
     return h1
 }
 
+export function createInstructionsContainer() {
+    const defaultText = 'SELECT STAGE'
+
+    let instructionsContainer = document.createElement('div');
+    instructionsContainer.classList.add('instructions-container')
+    let span = document.createElement('span');
+    span.innerText = defaultText
+    instructionsContainer.appendChild(span)
+    return instructionsContainer;
+}
+
 export function createDiv(...classes) {
     const div = document.createElement('div')
 

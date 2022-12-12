@@ -28,15 +28,24 @@ submitButton.addEventListener('click', (e) => {
 
             if (response.ok) {
                 let token;
+                let user;
 
                 for (let pair of response.headers.entries()) {
-                    if (pair[0] === 'authorization') {
-                        token = pair[1]
+
+                    let headerName = pair[0]
+                    let headerValue = pair[1]
+
+                    if (headerName === 'authorization') {
+                        token = headerValue
+                    }
+                    if (headerName === 'user') {
+                        user = headerValue
                     }
                 }
 
                 if (token) {
                     localStorage.setItem('jwtToken', token)
+                    localStorage.setItem('user', user)
                     window.location.replace("../main/main.html");
                 }
             }

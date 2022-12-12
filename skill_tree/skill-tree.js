@@ -2,6 +2,15 @@ import {renderSkillCardDetails} from "./skill-card-details.js";
 import {clearTranslation, enableDragging} from "./drag.js";
 import {clearZoom, enableZoom, zoomInOut} from "./zoom.js";
 
+
+const statusImageMap = {
+    "ACQUIRED": "/images/correct-icon.webp",
+    "TRAINED": "/images/in-progress-icon.png",
+    "NOT_TRAINED": "/images/blocked-icon.png"
+}
+
+let stageBranchElementsMap;
+
 function createTitleContainer(title) {
     const titleContainer = document.createElement('div')
     titleContainer.classList.add('title-container')
@@ -11,12 +20,6 @@ function createTitleContainer(title) {
     titleContainer.appendChild(p);
 
     return titleContainer
-}
-
-const statusImageMap = {
-    "ACQUIRED": "/images/correct-icon.webp",
-    "TRAINED": "/images/in-progress-icon.png",
-    "NOT_TRAINED": "/images/blocked-icon.png"
 }
 
 function createImageContainer(status) {
@@ -54,11 +57,7 @@ function createSkillCardElement(skill) {
     const skillCardElement = document.createElement('div');
     skillCardElement.classList.add('skill-card')
 
-    skillCardElement.appendChild(createImageContainer(skill.status))
-
     if (skill.status !== 'NOT_TRAINED') {
-        skillCardElement.classList.add('skill-card-unlocked')
-
         skillCardElement.appendChild(createTitleContainer(skill.title))
         skillCardElement.title = skill.title
         skillCardElement.description = skill.description
@@ -69,6 +68,8 @@ function createSkillCardElement(skill) {
     } else {
         skillCardElement.classList.add('skill-card-locked')
     }
+
+    skillCardElement.appendChild(createImageContainer(skill.status))
 
     return skillCardElement;
 }
@@ -124,6 +125,12 @@ function createStageBranchElement(stage) {
         branchElement.appendChild(subjectElement)
     })
 
+    if (!stageBranchElementsMap) {
+        stageBranchElementsMap = new Map()
+    }
+
+    stageBranchElementsMap.set(stage.title, branchElement)
+
     return branchElement
 }
 
@@ -138,9 +145,41 @@ function createSkillTree(skillTreeJson) {
     return rootTree
 }
 
-function createButtonGrid() {
+function createButtons() {
     let buttonGrid = document.createElement('div')
     buttonGrid.classList.add('button-grid')
+
+    const stageButtonContainer = document.createElement('div')
+    stageButtonContainer.classList.add('stage-button-container')
+
+    stageBranchElementsMap.forEach((stageBranchElement, stageName) => {
+        let toggleStageButton = document.createElement('button')
+        toggleStageButton.classList.add('stage-button')
+        toggleStageButton.innerText = stageName
+
+        toggleStageButton.classList.add('clicked')
+
+        toggleStageButton.addEventListener('click', () => {
+            if (stageBranchElement.style.display === 'none') {
+                toggleStageButton.classList.add('clicked')
+                stageBranchElement.style.display = 'flex'
+            } else {
+                toggleStageButton.classList.remove('clicked')
+                stageBranchElement.style.display = 'none'
+            }
+
+            clearTranslation()
+            clearZoom()
+        })
+
+        stageButtonContainer.appendChild(toggleStageButton)
+    })
+
+    buttonGrid.appendChild(stageButtonContainer)
+
+
+    const controlButtonContainer = document.createElement('div')
+    controlButtonContainer.classList.add('control-button-container')
 
     let centerButton = document.createElement('button')
     centerButton.classList.add('control-button')
@@ -150,7 +189,7 @@ function createButtonGrid() {
         clearTranslation()
         clearZoom()
     })
-    buttonGrid.appendChild(centerButton)
+    controlButtonContainer.appendChild(centerButton)
 
     let zoomInButton = document.createElement('button')
     zoomInButton.classList.add('control-button')
@@ -159,8 +198,7 @@ function createButtonGrid() {
     zoomInButton.addEventListener('click', () => {
         zoomInOut(1);
     })
-    buttonGrid.appendChild(zoomInButton)
-
+    controlButtonContainer.appendChild(zoomInButton)
 
     let zoomOutButton = document.createElement('button')
     zoomOutButton.classList.add('control-button')
@@ -169,7 +207,9 @@ function createButtonGrid() {
     zoomOutButton.addEventListener('click', () => {
         zoomInOut(-1);
     })
-    buttonGrid.appendChild(zoomOutButton)
+    controlButtonContainer.appendChild(zoomOutButton)
+
+    buttonGrid.appendChild(controlButtonContainer)
 
     return buttonGrid;
 }
@@ -188,11 +228,13 @@ export function renderTreeView(mainContainer, json) {
     treeContainer.appendChild(createSkillTree(json))
     background.appendChild(treeContainer)
 
-    treeView.appendChild(createButtonGrid())
+    treeView.appendChild(createButtons())
     treeView.appendChild(background)
 
     mainContainer.appendChild(treeView)
 
+    clearTranslation()
+    clearZoom()
     enableZoom()
     enableDragging()
 }

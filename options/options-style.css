@@ -1,0 +1,57 @@
+.options-view {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.options-view .options-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.options-view .options-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, .3);
+}
+
+.options-view .sliding {
+    animation: slide .5s;
+}
+
+.options-view .options-item > p {
+    font-weight: bolder;
+    transition-duration: .5s;
+}
+
+.options-view .options-item:hover > p {
+    transform: scale(1.1);
+    transition-duration: .5s;
+}
+
+@keyframes slide {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+

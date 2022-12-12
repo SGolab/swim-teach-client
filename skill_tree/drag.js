@@ -53,8 +53,8 @@ const mouseUpHandler = function () {
 };
 
 export function clearTranslation() {
-    baseTranslationX = 0
-    baseTranslationY = 0
+    baseTranslationX = 0;
+    baseTranslationY = 0;
     savedTranslationX = 0;
     savedTranslationY = 0;
 }
@@ -68,7 +68,6 @@ export function getSavedBaseTranslationY() {
 }
 
 export function enableDragging() {
-
     viewElement = document.querySelector('.tree-view')
 
     console.log('enabled dragging')

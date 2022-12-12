@@ -9,36 +9,47 @@
     gap: 5px;
 }
 
-.tree-view-alt .card-container {
-    flex-grow: 1;
+.tree-view-alt .instructions-container {
+    position: absolute;
+    top: 1%;
+    right: .5%;
 
+    min-width: 30%;
+    height: 5%;
+
+    border-radius: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.tree-view-alt .instructions-container > span {
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+.tree-view-alt .card-container {
     position: relative;
     display: none;
     flex-direction: column;
 
+    width: 100%;
+
     gap: 5px;
-
-    overflow: auto;
-
-    animation: slide .5s;
-
 }
 
 .tree-view-alt .card-container.folded {
-    flex-grow: 0;
-    overflow: scroll;
-
     min-width: 20px;
-}
-
-.tree-view-alt .card-container.folded::-webkit-scrollbar {
-    display: none;
+    width: max-content;
 }
 
 .tree-view-alt .card {
     position: relative;
 
-    flex-shrink: 1;
+    /*flex-shrink: 1;*/
     flex-grow: 1;
 
     display: flex;
@@ -46,43 +57,12 @@
     justify-content: center;
     align-items: center;
 
-    width: 100%;
-
     border-radius: 10px;
 
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.2);
     box-shadow: none;
 
     cursor: pointer;
-}
-
-.tree-view-alt .card-container.folded > .card {
-    flex-direction: row;
-    writing-mode: vertical-rl;
-
-    animation: slide 1.5s;
-}
-
-.tree-view-alt .card.details {
-    outline: solid black 5px;
-    outline-offset: -5px;
-
-    justify-content: start;
-    align-content: center;
-
-    background: rgba(0, 0, 0, 0.6);
-
-    color: antiquewhite;
-    text-shadow: 2px 4px 3px rgba(255, 255, 255, .3);
-
-    overflow: auto;
-
-    cursor: default;
-}
-
-.tree-view-alt .card.clicked {
-    background: rgba(0, 0, 0, 0.25);
-    box-shadow: rgba(50, 50, 93, 0.95) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
 
 .tree-view-alt .card > h1 {
@@ -93,6 +73,43 @@
 
     font-size: 24px;
     font-weight: bold;
+}
+
+.tree-view-alt .card-container.folded > .card {
+    width: 100%;
+    flex-direction: row;
+    writing-mode: vertical-rl;
+}
+
+.tree-view-alt .card-container.folded > .card h1 {
+    display: none;
+}
+
+.tree-view-alt .card.details {
+    outline: solid black 5px;
+    outline-offset: -5px;
+
+    justify-content: center;
+    align-items: center;
+
+    overflow: auto;
+
+    cursor: default;
+}
+
+.tree-view-alt .card.clicked {
+    /*animation: sepiaUp .9s forwards;*/
+}
+
+@keyframes sepiaUp {
+    from {
+        background: none;
+        /*filter: sepia(0%);*/
+    }
+    to {
+        background: lightyellow;
+        /*filter: sepia(100%);*/
+    }
 }
 
 .tree-view-alt .card.details > h1 {
@@ -111,14 +128,12 @@
 
 .tree-view-alt .card.details > iframe {
     position: absolute;
-    bottom: 5%;
 
-    width: 80%;
-
-    margin-left: auto;
-    margin-right: auto;
-
+    width: 70%;
+    max-height: 75%;
     aspect-ratio: 16/9;
+
+    border-radius: 10px;
 }
 
 .tree-view-alt .card.details > .status-info-container {
@@ -145,7 +160,6 @@
 
 .tree-view-alt .card.details > .status-info-container > .image-container {
     height: 80%;
-    filter: brightness(0) invert(1);
 }
 
 .tree-view-alt .card > .image-container {
@@ -156,28 +170,7 @@
     max-height: 50px;
 }
 
-
 .tree-view-alt .card-container.folded > .card h1 {
     display: none;
     overflow: hidden;
-}
-
-@keyframes slide {
-    from {
-        transform: translateX(-100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes rotate {
-    from {
-        transform: rotate(0);
-    }
-    to {
-        transform: rotate(360deg);
-    }
 }

@@ -2,11 +2,13 @@ import {
     createDiv, createH1,
     createIFrame,
     createImageContainer,
-    createImageContainerSrc,
+    createImageContainerSrc, createInstructionsContainer,
     createStatusInfoContainer
 } from "./skill-tree-alt-dom.js";
 
-let containers;
+let treeViewAlt;
+
+let cardContainers;
 
 let rootContainer;
 let stagesContainer;
@@ -14,79 +16,46 @@ let subjectsContainer;
 let skillsContainer;
 let skillDetailsContainer;
 
+let instructionsContainer;
+
+const timeUnit = 50
+const modifier = 1
+const hideElementAnimationDuration = 5 * timeUnit * modifier
+const flexBoxAnimationDuration = 10 * timeUnit * modifier
+const showElementAnimationDuration = 5 * timeUnit * modifier
+const showNextContainerDelay = 3 * timeUnit * modifier
+
 export function renderTreeViewAlternative(mainContainer, json) {
+    treeViewAlt = createDiv('tree-view-alt')
+    mainContainer.appendChild(treeViewAlt)
 
-    json.stages.push(json.stages[0]) //todo delete
-    json.stages.push(json.stages[0])
-    json.stages.push(json.stages[0])
+    instructionsContainer = createInstructionsContainer()
+    treeViewAlt.appendChild(instructionsContainer)
 
-    const treeViewAlternative = createDiv('tree-view-alt')
-
-    containers = []
-
-    rootContainer = createDiv('card-container')
-    stagesContainer = createDiv('card-container')
-    subjectsContainer = createDiv('card-container')
-    skillsContainer = createDiv('card-container')
-    skillDetailsContainer = createDiv('card-container', 'details')
-
-    containers.push(rootContainer)
-    containers.push(stagesContainer)
-    containers.push(subjectsContainer)
-    containers.push(skillsContainer)
-    containers.push(skillDetailsContainer)
-
-    containers.forEach(container => treeViewAlternative.appendChild(container))
-
+    createCardContainers(treeViewAlt)
 
     rootContainer.appendChild(createRootCard(json))
 
+    //animation preparing start
+    let oldStagesAnimationInfo = getFlexItemInfo(stagesContainer);
+
+    //changing state
     json.stages.forEach(stage => {
         stagesContainer.appendChild(createStageCard(stage))
     })
-    stagesContainer.style.display = 'flex';
+    stagesContainer.childNodes.forEach(stageCard => stageCard.childNodes.forEach(cn => cn.style.opacity = 0))
+    stagesContainer.style.display = 'flex'
 
-    mainContainer.appendChild(treeViewAlternative)
-}
+    // animation start
+    let newStagesAnimationInfo = getFlexItemInfo(stagesContainer);
+    oldStagesAnimationInfo.x = oldStagesAnimationInfo.x + newStagesAnimationInfo.width //changing the direction of slide from left (all items lie on flex start) to right
 
-function getNextContainersIncluding(container) {
-    return containers.slice(containers.indexOf(container), containers.length)
-}
+    animateFlexBox(oldStagesAnimationInfo, newStagesAnimationInfo)
 
-function getNextContainersExcluding(container) {
-    return containers.slice(containers.indexOf(container) + 1, containers.length)
-}
-
-function refresh(item) {
-    const c = item.classList[0]
-
-    item.classList.remove(c)
-    item.offsetWidth //https://stackoverflow.com/questions/44846614/trigger-css-animations-in-javascript
-    item.classList.add(c)
-}
-
-function createRootCard(json) {
-    let rootCard = createDiv('card')
-    rootContainer.classList.add('folded')
-
-    rootCard.addEventListener('click', () => {
-
-        getNextContainersIncluding(rootContainer).forEach(container => container.style.display = 'none')
-
-        getNextContainersExcluding(rootContainer).forEach(container => {
-            container.innerHTML = ''
-            container.classList.remove('folded')
-        })
-
-        json.stages.forEach(stage => {
-            stagesContainer.appendChild(createStageCard(stage))
-        })
-        stagesContainer.style.display = 'flex';
-
-        refresh(stagesContainer)
-    })
-
-    return rootCard
+    setTimeout(() => {
+        showAndSlideCardContent(stagesContainer, showElementAnimationDuration)
+    }, flexBoxAnimationDuration)
+    //animation end
 }
 
 function createStageCard(stage) {
@@ -96,28 +65,9 @@ function createStageCard(stage) {
     stageCard.appendChild(createImageContainerSrc('../images/dolphin.png'))
 
     stageCard.addEventListener('click', () => {
-        getNextContainersExcluding(stagesContainer).forEach(container => {
-            container.style.display = 'none'
-            container.innerHTML = ''
-            container.classList.remove('folded')
-        })
-
-        stagesContainer.classList.add('folded')
-        stagesContainer.childNodes.forEach(cn => {
-            cn.classList.remove('clicked')
-        })
-        stageCard.classList.add('clicked')
-
-        stage.subjects.forEach(subject => {
-            subjectsContainer.appendChild(createSubjectCard(subject))
-        })
-
-        subjectsContainer.style.display = 'flex';
         rootContainer.style.display = 'flex'
-
-        refresh(subjectsContainer)
+        onCLick(stagesContainer, subjectsContainer, createSubjectCard, stage.subjects)
     })
-
     return stageCard
 }
 
@@ -128,28 +78,9 @@ function createSubjectCard(subject) {
     subjectCard.appendChild(createImageContainerSrc('../images/dolphin.png'))
 
     subjectCard.addEventListener('click', () => {
-
-        getNextContainersExcluding(subjectsContainer).forEach(container => {
-            container.style.display = 'none'
-            container.innerHTML = ''
-            container.classList.remove('folded')
-        })
-
-        subjectsContainer.classList.add('folded')
-        subjectsContainer.childNodes.forEach(cn => {
-            cn.classList.remove('clicked')
-        })
-        subjectCard.classList.add('clicked')
-
-        subject.skills.forEach(skill => {
-            skillsContainer.appendChild(createSkillCard(skill))
-        })
-
-        skillsContainer.style.display = 'flex';
-
-        refresh(skillsContainer)
-    })
-
+            onCLick(subjectsContainer, skillsContainer, createSkillCard, subject.skills)
+        }
+    )
     return subjectCard;
 }
 
@@ -160,29 +91,200 @@ function createSkillCard(skill) {
         skillCard.appendChild(createH1(skill.title))
 
         skillCard.addEventListener('click', () => {
-
-            getNextContainersExcluding(skillsContainer).forEach(container => {
-                container.style.display = 'none'
-                container.innerHTML = ''
-                container.classList.remove('folded')
-            })
-
-            skillsContainer.classList.add('folded')
-            skillsContainer.childNodes.forEach(cn => {
-                cn.classList.remove('clicked')
-            })
-            skillCard.classList.add('clicked')
-
-            skillDetailsContainer.appendChild(createSkillDetailsCard(skill))
-            skillDetailsContainer.style.display = 'flex';
-
-            refresh(skillDetailsContainer)
+            onCLick(skillsContainer, skillDetailsContainer, createSkillDetailsCard, Array.of(skill))
         })
     }
 
     skillCard.appendChild(createImageContainer(skill.status))
 
     return skillCard
+}
+
+function onCLick(container, nextContainer, createCardFunction, cardDataList) {
+
+    let nextContainers = getNextContainersExcluding(container);
+    nextContainers.forEach(c => {
+        c.innerHTML = ''
+        c.style.display = 'none'
+        c.classList.remove('folded')
+    })
+
+    if (!container.classList.contains('folded')) {
+        hideCardContent(container, hideElementAnimationDuration)
+    }
+
+    setTimeout(() => {
+        const oldContainerAnimationInfo = getFlexItemInfo(container)
+
+        container.classList.add('folded')
+
+        //animating nextContainer's cards
+        const oldNextContainerAnimationInfo = getFlexItemInfo(nextContainer)
+
+        //changing state
+        cardDataList.forEach(cardInfo => {
+            nextContainer.appendChild(createCardFunction(cardInfo))
+        })
+
+        nextContainer.childNodes.forEach(card => card.childNodes.forEach(cn => cn.style.opacity = 0))
+        nextContainer.style.opacity = 0
+        nextContainer.style.display = 'flex'
+
+        setTimeout(() => { //delaying appearance of next container
+            nextContainer.style.opacity = 1
+
+            let newNextContainerAnimationInfo = getFlexItemInfo(nextContainer);
+            oldNextContainerAnimationInfo.x = oldNextContainerAnimationInfo.x + newNextContainerAnimationInfo.width //changing the direction of slide from left (all items lie on flex start) to right
+
+            animateFlexBox(oldNextContainerAnimationInfo, newNextContainerAnimationInfo)
+
+            setTimeout(() => {
+                showAndSlideCardContent(nextContainer, showElementAnimationDuration)
+            }, flexBoxAnimationDuration)
+        }, showNextContainerDelay)
+        //end of nextContainer's cards animation
+
+
+        const newContainerAnimationInfo = getFlexItemInfo(container)
+        animateFlexBox(oldContainerAnimationInfo, newContainerAnimationInfo) //animating container
+
+        setTimeout(() => {
+            showCardContent(container, showElementAnimationDuration)
+        }, flexBoxAnimationDuration)
+
+    }, hideElementAnimationDuration)
+}
+
+function createRootCard(json) {
+    let rootCard = createDiv('card')
+    rootContainer.classList.add('folded')
+
+    rootCard.addEventListener('click', () => {
+
+        rootContainer.style.display = 'none'
+        onCLick(rootContainer, stagesContainer, createStageCard, json.stages)
+    })
+
+    return rootCard
+}
+
+function getFlexItemInfo(container) {
+    const rect = container.getBoundingClientRect()
+
+    const info = {
+        element: container,
+        // x: rect.right,
+        x: (rect.right + rect.left) / 2,
+        y: rect.top,
+        width: rect.right - rect.left,
+        height: rect.bottom - rect.top,
+    }
+
+    return info
+}
+
+function animateFlexBox(oldFlexItemInfo, newFlexItemInfo) {
+    const translateX = oldFlexItemInfo.x - newFlexItemInfo.x
+    const scaleX = oldFlexItemInfo.width / newFlexItemInfo.width
+
+    newFlexItemInfo.element.childNodes.forEach(el => {
+        el.animate(
+            [
+                {
+                    borderRadius: '3px'
+                },
+                {
+                    borderRadius: '10px'
+                },
+            ],
+            {
+                duration: flexBoxAnimationDuration,
+                easing: 'ease-out',
+            }
+        )
+    })
+
+    newFlexItemInfo.element.animate(
+        [
+            {
+                transform: `translate(${translateX}px) scaleX(${scaleX})`,
+            },
+            {
+                transform: 'none',
+            },
+        ],
+        {
+            duration: flexBoxAnimationDuration,
+            easing: 'ease-out',
+        }
+    )
+}
+
+function hideCardContent(container, duration) {
+    let cardContentItems = container.querySelectorAll('.card > *');
+    cardContentItems.forEach(cardContentItem => {
+        cardContentItem.animate(
+            [
+                {
+                    opacity: 1,
+                    transform: 'translateX(0)'
+                },
+                {
+                    opacity: 0,
+                    transform: 'translateX(-200px)'
+                }
+            ],
+            {
+                duration: duration,
+                easing: 'ease-out'
+            }
+        )
+        setTimeout(() => cardContentItem.style.opacity = 0, duration)
+    })
+}
+
+function showCardContent(container, duration) {
+    let cardContentItems = container.querySelectorAll('.card > *');
+    cardContentItems.forEach(image => {
+        image.animate(
+            [
+                {
+                    opacity: 0
+                },
+                {
+                    opacity: 1
+                }
+            ],
+            {
+                duration: duration,
+                easing: 'ease-in'
+            }
+        )
+        setTimeout(() => image.style.opacity = 1, duration)
+    })
+}
+
+function showAndSlideCardContent(container, duration) {
+    let cardContentItems = container.querySelectorAll('.card > *');
+    cardContentItems.forEach(image => {
+        image.animate(
+            [
+                {
+                    opacity: 0,
+                    transform: 'translateX(200px)'
+                },
+                {
+                    opacity: 1,
+                    transform: 'translateX(0px)'
+                }
+            ],
+            {
+                duration: duration,
+                easing: 'ease-out'
+            }
+        )
+        setTimeout(() => image.style.opacity = 1, duration)
+    })
 }
 
 function createSkillDetailsCard(skill) {
@@ -193,4 +295,30 @@ function createSkillDetailsCard(skill) {
     cardDetails.appendChild(createIFrame(skill.url))
 
     return cardDetails
+}
+
+function createCardContainers(treeViewAlt) {
+    cardContainers = []
+
+    rootContainer = createDiv('card-container')
+    stagesContainer = createDiv('card-container')
+    subjectsContainer = createDiv('card-container')
+    skillsContainer = createDiv('card-container')
+    skillDetailsContainer = createDiv('card-container', 'details')
+
+    cardContainers.push(rootContainer)
+    cardContainers.push(stagesContainer)
+    cardContainers.push(subjectsContainer)
+    cardContainers.push(skillsContainer)
+    cardContainers.push(skillDetailsContainer)
+
+    cardContainers.forEach(container => treeViewAlt.appendChild(container))
+}
+
+function getNextContainersIncluding(container) {
+    return cardContainers.slice(cardContainers.indexOf(container), cardContainers.length)
+}
+
+function getNextContainersExcluding(container) {
+    return cardContainers.slice(cardContainers.indexOf(container) + 1, cardContainers.length)
 }
