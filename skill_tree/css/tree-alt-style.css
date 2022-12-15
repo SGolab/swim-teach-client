@@ -41,15 +41,9 @@
     gap: 5px;
 }
 
-.tree-view-alt .card-container.folded {
-    min-width: 20px;
-    width: max-content;
-}
-
 .tree-view-alt .card {
     position: relative;
 
-    /*flex-shrink: 1;*/
     flex-grow: 1;
 
     display: flex;
@@ -63,6 +57,8 @@
     box-shadow: none;
 
     cursor: pointer;
+
+    overflow: hidden;
 }
 
 .tree-view-alt .card > h1 {
@@ -73,16 +69,6 @@
 
     font-size: 24px;
     font-weight: bold;
-}
-
-.tree-view-alt .card-container.folded > .card {
-    width: 100%;
-    flex-direction: row;
-    writing-mode: vertical-rl;
-}
-
-.tree-view-alt .card-container.folded > .card h1 {
-    display: none;
 }
 
 .tree-view-alt .card.details {
@@ -98,18 +84,7 @@
 }
 
 .tree-view-alt .card.clicked {
-    /*animation: sepiaUp .9s forwards;*/
-}
-
-@keyframes sepiaUp {
-    from {
-        background: none;
-        /*filter: sepia(0%);*/
-    }
-    to {
-        background: lightyellow;
-        /*filter: sepia(100%);*/
-    }
+/*todo*/
 }
 
 .tree-view-alt .card.details > h1 {
@@ -170,7 +145,7 @@
     max-height: 50px;
 }
 
-.tree-view-alt .card-container.folded > .card h1 {
-    display: none;
-    overflow: hidden;
-}
+/*.tree-view-alt .card-container.folded > .card h1 {*/
+/*    display: none;*/
+/*    overflow: hidden;*/
+/*}*/

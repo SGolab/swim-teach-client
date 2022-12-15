@@ -129,7 +129,7 @@ body {
 
     background: linear-gradient(to right bottom, pink, lightgreen);
     background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
+    /*animation: gradient 15s ease infinite;*/
 }
 
 @keyframes gradient {
@@ -152,7 +152,7 @@ body {
     top: -30%;
 
     transform-origin: center;
-    animation: rotate 60s linear infinite;
+    /*animation: rotate 60s linear infinite;*/
 
     filter: blur(5px);
 }
