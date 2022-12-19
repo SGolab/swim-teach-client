@@ -1,24 +1,5 @@
-
-
 export function createOptionsItems(options) {
-
-    let optionsItems = []
-    let slideAnimationDelay = 0;
-
-    options.forEach(option => {
-        let item = createOptionsItem(option.text, option.action);
-
-        item.style.visibility = 'hidden'
-        setTimeout(() => {
-            item.style.visibility = 'visible'
-            item.classList.add('sliding')
-        }, slideAnimationDelay)
-        slideAnimationDelay += 50
-
-        optionsItems.push(item)
-    })
-
-    return optionsItems
+    return options.map(option => createOptionsItem(option.text, option.action))
 }
 
 function createOptionsItem(text, action) {

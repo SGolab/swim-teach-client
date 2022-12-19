@@ -1,6 +1,6 @@
 import {createOptionsItems} from "./options-dom.js";
 
-export function renderOptions(mainContainer) {
+export function renderOptions() {
     const optionsView = document.createElement('div');
     optionsView.classList.add('options-view')
 
@@ -15,21 +15,7 @@ export function renderOptions(mainContainer) {
         {
             text: 'LOG OUT',
             action: logOut
-        },
-        //todo delete start
-        {
-            text: 'LOG OUT',
-            action: logOut
-        },
-        {
-            text: 'LOG OUT',
-            action: logOut
-        },
-        {
-            text: 'LOG OUT',
-            action: logOut
         }
-        //todo end
     ]
 
     let optionsItems = createOptionsItems(options);
@@ -38,7 +24,7 @@ export function renderOptions(mainContainer) {
     })
 
     optionsView.appendChild(optionsContainer)
-    mainContainer.appendChild(optionsView)
+    return optionsView;
 }
 
 function showUserDetails() {

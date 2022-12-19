@@ -9,6 +9,7 @@ let mainContainer = document.querySelector('.main-container')
 let userInfo = document.querySelector('.user-info')
 
 let user = localStorage.getItem('user');
+
 if (user) {
     userInfo.innerText = 'Logged in: ' + localStorage.getItem('user')
 }
@@ -22,25 +23,61 @@ let optionsBtn = document.querySelector('#options-button');
 treeViewBtn.addEventListener('click', async () => {
     mainContainer.innerHTML = ''
     const skillTreeDataJson = await fetchSkillTreeData()
-    renderTreeView(mainContainer, skillTreeDataJson)
+    mainContainer.appendChild(renderTreeView(skillTreeDataJson))
 })
 
 treeViewAltBtn.addEventListener('click', async () => {
-    mainContainer.innerHTML = ''
-    const skillTreeDataJson = await fetchSkillTreeData()
-    renderTreeViewAlternative(mainContainer, skillTreeDataJson)
+    fetchSkillTreeData()
+        .then(json => renderViewAnimated(() => renderTreeViewAlternative(json)))
 })
 
 goalsBtn.addEventListener('click', async () => {
-    mainContainer.innerHTML = ''
-    const goalDataJson = await fetchGoalsData()
-    renderGoalView(mainContainer, goalDataJson)
+    fetchGoalsData()
+        .then(json => renderViewAnimated(() => renderGoalView(json)))
 })
 
 optionsBtn.addEventListener('click', async () => {
-    mainContainer.innerHTML = ''
-    renderOptions(mainContainer)
+    renderViewAnimated(() => renderOptions())
 })
+
+function renderViewAnimated(renderViewFunction) {
+    const oldView = mainContainer.childNodes[0]
+    const newView = renderViewFunction()
+    mainContainer.appendChild(newView)
+
+    if (oldView) {
+        oldView.animate(
+            [
+                {
+                    transform: 'none'
+                },
+                {
+                    transform: 'translateY(100vh)'
+                }
+            ],
+            {
+                duration: 1000,
+                easing: 'ease-in-out'
+            }
+        ).finished
+            .then(() => mainContainer.removeChild(oldView))
+    }
+
+    newView.animate(
+        [
+            {
+                transform: 'translateY(-100vh)'
+            },
+            {
+                transform: 'none'
+            }
+        ],
+        {
+            duration: 1000,
+            easing: 'ease-in-out'
+        })
+
+}
 
 let background = document.querySelector('.background')
 

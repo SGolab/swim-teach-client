@@ -1,6 +1,6 @@
 import {getSavedBaseTranslationX, getSavedBaseTranslationY} from './drag.js'
 
-let zoomElement = document.querySelector('#drag-zoom-item');
+let zoomElement;
 let zoom = 1;
 let ZOOM_SPEED = 0.1;
 
@@ -23,6 +23,10 @@ export function zoomInOut(deltaY) {
 
     let zoomElement = document.querySelector('#drag-zoom-item')
     zoomElement.style.transform = transformation;
+}
+export function setZoom(treeView) {
+    zoomElement = treeView.querySelector('#drag-zoom-item')
+    console.log('set zoomElement to: ' + zoomElement)
 }
 
 export function enableZoom() {
@@ -54,7 +58,7 @@ export function getZoom() {
 export function clearZoom() {
     zoom = 1;
 
-    zoomElement = document.querySelector('#drag-zoom-item')
+    // zoomElement = document.querySelector('#drag-zoom-item')
     zoomElement.style.transform = '';
 }
 

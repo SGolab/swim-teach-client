@@ -27,9 +27,8 @@ let instructionsContainer;
 const DIRECTION_LEFT = -1
 const DIRECTION_RIGHT = 1
 
-export function renderTreeViewAlternative(mainContainer, json) {
+export function renderTreeViewAlternative(json) {
     treeViewAlt = createDiv('tree-view-alt')
-    mainContainer.appendChild(treeViewAlt)
 
     instructionsContainer = createInstructionsContainer()
     treeViewAlt.appendChild(instructionsContainer)
@@ -42,7 +41,14 @@ export function renderTreeViewAlternative(mainContainer, json) {
     rootContainer.isFolded = true
     rootContainer.style.maxWidth = '20px'
 
-    loadNextContainerAnimated(rootContainer, createStageCard, json.stages)
+    Promise.resolve()
+        .then(() => createNextCards(stagesContainer, createStageCard, json.stages))
+        .then(() => {
+            stagesContainer.style.display = 'flex'
+            stagesContainer.querySelectorAll('.card *').forEach(item => item.style.opacity = 1)
+        })
+
+    return treeViewAlt
 }
 
 function createCardContainers(treeViewAlt) {
@@ -187,7 +193,6 @@ function slideOutContainers(nextContainersList) {
 
 function clearContainers(nextContainersList) {
     nextContainersList.forEach(container => {
-        console.log('clearing container')
         container.style.display = 'none'
         container.isFolded = false
         container.style.maxWidth = '100vw'

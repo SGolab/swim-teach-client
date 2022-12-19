@@ -10,6 +10,8 @@ let baseTranslationY = 0;
 
 let viewElement
 
+let dragElement;
+
 const mouseDownHandler = function (e) {
     viewElement.style.cursor = 'grabbing';
     viewElement.style.userSelect = 'none';
@@ -52,6 +54,11 @@ const mouseUpHandler = function () {
     savedTranslationY = baseTranslationY;
 };
 
+export function setDrag(treeView) {
+    viewElement = treeView
+    dragElement = treeView.querySelector('#drag-zoom-element')
+}
+
 export function clearTranslation() {
     baseTranslationX = 0;
     baseTranslationY = 0;
@@ -68,7 +75,7 @@ export function getSavedBaseTranslationY() {
 }
 
 export function enableDragging() {
-    viewElement = document.querySelector('.tree-view')
+    // viewElement = document.querySelector('.tree-view')
 
     console.log('enabled dragging')
     viewElement.style.cursor = 'grab';

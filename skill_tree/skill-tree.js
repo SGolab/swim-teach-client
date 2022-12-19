@@ -1,6 +1,6 @@
 import {renderSkillCardDetails} from "./skill-card-details.js";
-import {clearTranslation, enableDragging} from "./drag.js";
-import {clearZoom, enableZoom, zoomInOut} from "./zoom.js";
+import {clearTranslation, enableDragging, setDrag} from "./drag.js";
+import {clearZoom, enableZoom, setZoom, zoomInOut} from "./zoom.js";
 
 
 const statusImageMap = {
@@ -214,7 +214,7 @@ function createButtons() {
     return buttonGrid;
 }
 
-export function renderTreeView(mainContainer, json) {
+export function renderTreeView(json) {
     let treeView = document.createElement('div')
     treeView.classList.add('tree-view')
 
@@ -231,10 +231,12 @@ export function renderTreeView(mainContainer, json) {
     treeView.appendChild(createButtons())
     treeView.appendChild(background)
 
-    mainContainer.appendChild(treeView)
-
+    setZoom(treeView)
+    setDrag(treeView)
     clearTranslation()
     clearZoom()
     enableZoom()
     enableDragging()
+
+    return treeView
 }

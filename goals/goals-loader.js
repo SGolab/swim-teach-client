@@ -23,10 +23,7 @@ function createGoalCard(goal) {
     return goalCard;
 }
 
-export function renderGoalView(mainContainer, goalsData) {
-
-    console.log(goalsData)
-
+export function renderGoalView(goalsData) {
     const goals = goalsData.goals
 
     let goalsView = document.createElement('div');
@@ -36,5 +33,5 @@ export function renderGoalView(mainContainer, goalsData) {
         goalsView.appendChild(createGoalCard(goal))
     })
 
-    mainContainer.appendChild(goalsView)
+    return goalsView
 }
