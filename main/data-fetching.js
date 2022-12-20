@@ -14,6 +14,14 @@ export async function fetchGoalsData() {
         .then(response => response.json())
 }
 
+export async function fetchUserDetails() {
+    return fetch(`http://localhost:8080/users/${localStorage.getItem('user')}/details`, {
+        'method': 'GET',
+        'headers': getHeaders()
+    })
+        .then(response => response.json())
+}
+
 function getHeaders() {
     return new Headers({
         'Authorization': localStorage.getItem('jwtToken')

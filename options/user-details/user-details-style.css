@@ -1,0 +1,22 @@
+.user-details-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, .3);
+}
+
+.details-item {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+    width: 200px;
+    height: 50px;
+}
+
+.details-item-property-name {
+    font-weight: bold;
+}

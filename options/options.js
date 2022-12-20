@@ -1,16 +1,23 @@
 import {createOptionsItems} from "./options-dom.js";
+import {createUserDetailsContainer} from "./user-details/user-details-dom.js";
+import {fetchUserDetails} from "../main/data-fetching.js";
+
+let optionsContainer;
 
 export function renderOptions() {
     const optionsView = document.createElement('div');
     optionsView.classList.add('options-view')
 
-    const optionsContainer = document.createElement('div');
+    optionsContainer = document.createElement('div');
     optionsContainer.classList.add('options-container')
 
     const options = [
         {
             text: 'USER DETAILS',
-            action: showUserDetails
+            action: () => {
+                fetchUserDetails()
+                    .then(json => optionsView.appendChild(createUserDetailsContainer(json)))
+            }
         },
         {
             text: 'LOG OUT',
@@ -27,9 +34,6 @@ export function renderOptions() {
     return optionsView;
 }
 
-function showUserDetails() {
-    alert('SHOWING USER DETAILS')
-}
 
 function logOut() {
     localStorage.clear()

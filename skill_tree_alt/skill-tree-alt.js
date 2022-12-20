@@ -73,6 +73,8 @@ function createRootCard(json) {
     let rootCard = createDiv('card')
 
     rootCard.addEventListener('click', () => {
+        instructionsContainer.style.visibility = 'visible'
+        instructionsContainer.querySelector('span').innerText = 'SELECT STAGE'
         loadNextContainerAnimated(rootContainer, createStageCard, json.stages)
     })
 
@@ -88,6 +90,8 @@ function createStageCard(stage) {
     stageCard.querySelectorAll('*').forEach(cn => cn.style.opacity = 0)
 
     stageCard.addEventListener('click', () => {
+        instructionsContainer.style.visibility = 'visible'
+        instructionsContainer.querySelector('span').innerText = 'SELECT SUBJECT'
         loadNextContainerAnimated(stagesContainer, createSubjectCard, stage.subjects)
     })
     return stageCard
@@ -102,6 +106,8 @@ function createSubjectCard(subject) {
     subjectCard.querySelectorAll('*').forEach(cn => cn.style.opacity = 0)
 
     subjectCard.addEventListener('click', () => {
+        instructionsContainer.style.visibility = 'visible'
+        instructionsContainer.querySelector('span').innerText = 'SELECT SKILL'
         loadNextContainerAnimated(subjectsContainer, createSkillCard, subject.skills)
     })
     return subjectCard;
@@ -114,6 +120,7 @@ function createSkillCard(skill) {
         skillCard.appendChild(createH1(skill.title))
 
         skillCard.addEventListener('click', () => {
+            instructionsContainer.style.visibility = 'hidden'
             loadNextContainerAnimated(skillsContainer, createSkillDetailsCard, Array.of(skill))
         })
     }

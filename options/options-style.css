@@ -7,6 +7,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    gap: 20px;
 }
 
 .options-view .options-container {
@@ -29,10 +31,6 @@
     background: rgba(255, 255, 255, .3);
 }
 
-.options-view .sliding {
-    animation: slide .5s;
-}
-
 .options-view .options-item > p {
     font-weight: bolder;
     transition-duration: .5s;
@@ -41,17 +39,6 @@
 .options-view .options-item:hover > p {
     transform: scale(1.1);
     transition-duration: .5s;
-}
-
-@keyframes slide {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
 }
 
 

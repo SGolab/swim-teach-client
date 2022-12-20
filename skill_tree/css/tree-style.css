@@ -103,8 +103,6 @@
     overflow: hidden;
 
     padding: 50px;
-
-    animation: slide .5s;
 }
 
 .tree-view .tree-container > .tree {
@@ -165,15 +163,4 @@
 
     left: 0;
     top: -40px;
-}
-
-@keyframes slide {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
 }
