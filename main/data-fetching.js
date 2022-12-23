@@ -22,6 +22,11 @@ export async function fetchUserDetails() {
         .then(response => response.json())
 }
 
+export async function fetchLessonHistory() {
+    return fetch("../lesson-history-example.json")
+        .then(content => content.json())
+}
+
 function getHeaders() {
     return new Headers({
         'Authorization': localStorage.getItem('jwtToken')

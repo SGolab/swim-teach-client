@@ -1,0 +1,126 @@
+[
+  {
+    "dateTime": "20.12.2022 19:00",
+    "location": "Conrada 6",
+    "skillMarks": [
+      {
+        "skillDetailsId": 2,
+        "skillDetailsTitle": "Skill Title 2",
+        "skillStatus": "TRAINED"
+      },
+      {
+        "skillDetailsId": 3,
+        "skillDetailsTitle": "Skill Title 3",
+        "skillStatus": "ACQUIRED"
+      },
+      {
+        "skillDetailsId": 4,
+        "skillDetailsTitle": "Skill Title 4",
+        "skillStatus": "ACQUIRED"
+      },
+      {
+        "skillDetailsId": 5,
+        "skillDetailsTitle": "Skill Title 5",
+        "skillStatus": "ACQUIRED"
+      },
+      {
+        "skillDetailsId": 6,
+        "skillDetailsTitle": "Skill Title 6",
+        "skillStatus": "ACQUIRED"
+      }
+    ]
+  },
+  {
+    "dateTime": "13.12.2022 19:00",
+    "location": "Conrada 6",
+    "skillMarks": [
+      {
+        "skillDetailsId": 1,
+        "skillDetailsTitle": "Skill Title 1",
+        "skillStatus": "ACQUIRED"
+      },
+      {
+        "skillDetailsId": 2,
+        "skillDetailsTitle": "Skill Title 2",
+        "skillStatus": "TRAINED"
+      }
+    ]
+  },
+  {
+    "dateTime": "6.12.2022 19:00",
+    "location": "Conrada 6",
+    "skillMarks": [
+      {
+        "skillDetailsId": 1,
+        "skillDetailsTitle": "Skill Title 1",
+        "skillStatus": "TRAINED"
+      }
+    ]
+  },
+  {
+    "dateTime": "6.12.2022 19:00",
+    "location": "Conrada 6",
+    "skillMarks": [
+      {
+        "skillDetailsId": 1,
+        "skillDetailsTitle": "Skill Title 1",
+        "skillStatus": "TRAINED"
+      }
+    ]
+  },
+  {
+    "dateTime": "6.12.2022 19:00",
+    "location": "Conrada 6",
+    "skillMarks": [
+      {
+        "skillDetailsId": 1,
+        "skillDetailsTitle": "Skill Title 1",
+        "skillStatus": "TRAINED"
+      }
+    ]
+  },
+  {
+    "dateTime": "6.12.2022 19:00",
+    "location": "Conrada 6",
+    "skillMarks": [
+      {
+        "skillDetailsId": 1,
+        "skillDetailsTitle": "Skill Title 1",
+        "skillStatus": "TRAINED"
+      }
+    ]
+  },
+  {
+    "dateTime": "6.12.2022 19:00",
+    "location": "Conrada 6",
+    "skillMarks": [
+      {
+        "skillDetailsId": 1,
+        "skillDetailsTitle": "Skill Title 1",
+        "skillStatus": "TRAINED"
+      }
+    ]
+  },
+  {
+    "dateTime": "6.12.2022 19:00",
+    "location": "Conrada 6",
+    "skillMarks": [
+      {
+        "skillDetailsId": 1,
+        "skillDetailsTitle": "Skill Title 1",
+        "skillStatus": "TRAINED"
+      }
+    ]
+  },
+  {
+    "dateTime": "6.12.2022 19:00",
+    "location": "Conrada 6",
+    "skillMarks": [
+      {
+        "skillDetailsId": 1,
+        "skillDetailsTitle": "Skill Title 1",
+        "skillStatus": "TRAINED"
+      }
+    ]
+  }
+]

@@ -1,8 +1,9 @@
-import {fetchSkillTreeData, fetchGoalsData} from "./data-fetching.js";
+import {fetchSkillTreeData, fetchGoalsData, fetchLessonHistory} from "./data-fetching.js";
 import {renderTreeView} from "../skill_tree/skill-tree.js";
 import {renderGoalView} from "../goals/goals-loader.js";
-import {renderTreeViewAlternative} from "../skill_tree_alt/skill-tree-alt.js";
+import {renderTreeViewAlternative, renderTreeViewAltOpenSkillDetails} from "../skill_tree_alt/skill-tree-alt.js";
 import {renderOptions} from "../options/options.js";
+import {renderLessonHistory} from "../lesson_history/lesson-history.js";
 
 
 let body = document.querySelector('body')
@@ -40,12 +41,28 @@ treeViewAltBtn.addEventListener('click', async function () {
         .then(json => renderViewAnimated(() => renderTreeViewAlternative(json)))
 })
 
+export function changeViewToTreeViewAltOpenSkillDetails(skillDetailsId) { //todo think about different location for this method
+    if (buttonClicked === treeViewAltBtn) return
+    changeButtonClicked(treeViewAltBtn)
+
+    fetchSkillTreeData()
+        .then(json => renderViewAnimated(() => renderTreeViewAltOpenSkillDetails(json, skillDetailsId)))
+}
+
 goalsBtn.addEventListener('click', async function () {
     if (buttonClicked === this) return
     changeButtonClicked(this)
 
     fetchGoalsData()
         .then(json => renderViewAnimated(() => renderGoalView(json)))
+})
+
+lessonHistoryBtn.addEventListener('click', async function () {
+    if (buttonClicked === this) return
+    changeButtonClicked(this)
+
+    fetchLessonHistory()
+        .then(json => renderViewAnimated(() => renderLessonHistory(json)))
 })
 
 optionsBtn.addEventListener('click', async function () {
@@ -55,7 +72,7 @@ optionsBtn.addEventListener('click', async function () {
     renderViewAnimated(() => renderOptions())
 })
 
-function renderViewAnimated(renderViewFunction) {
+export function renderViewAnimated(renderViewFunction) { //todo delete export
     body.style.pointerEvents = 'none' //disable clicking
 
     const oldView = mainContainer.childNodes[0]

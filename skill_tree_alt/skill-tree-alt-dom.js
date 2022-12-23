@@ -1,18 +1,3 @@
-// const statusImageMap = {
-//     'ACQUIRED': '../images/correct-icon.webp',
-//     'TRAINED': '../images/in-progress-icon.png',
-//     'NOT_TRAINED': '../images/blocked-icon.png'
-// }
-
-// export function createIconContainer(status) {
-//     const iconContainer = createDiv('icon-container')
-//     const icon = document.createElement('img')
-//     icon.src = statusImageMap[status]
-//     iconContainer.appendChild(icon)
-//
-//     return iconContainer
-// }
-
 export function createImageContainerSrc(url) {
     const imageContainer = createDiv('image-container')
     const image = createDiv('image')
@@ -23,7 +8,6 @@ export function createImageContainerSrc(url) {
 }
 
 export function createImageContainer(status) {
-
     const statusImageMap = {
         'ACQUIRED': '../images/correct-icon.webp',
         'TRAINED': '../images/in-progress-icon.png',

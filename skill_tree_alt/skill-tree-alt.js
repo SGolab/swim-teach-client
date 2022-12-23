@@ -41,12 +41,65 @@ export function renderTreeViewAlternative(json) {
     rootContainer.isFolded = true
     rootContainer.style.maxWidth = '20px'
 
-    Promise.resolve()
-        .then(() => createNextCards(stagesContainer, createStageCard, json.stages))
-        .then(() => {
-            stagesContainer.style.display = 'flex'
-            stagesContainer.querySelectorAll('.card *').forEach(item => item.style.opacity = 1)
-        })
+    createNextCards(stagesContainer, createStageCard, json.stages)
+    stagesContainer.style.display = 'flex'
+    stagesContainer.querySelectorAll('.card *').forEach(item => item.style.opacity = 1)
+
+    return treeViewAlt
+}
+
+export function renderTreeViewAltOpenSkillDetails(json, skillDetailsId) {
+    treeViewAlt = createDiv('tree-view-alt')
+
+    instructionsContainer = createInstructionsContainer()
+    treeViewAlt.appendChild(instructionsContainer)
+
+    createCardContainers(treeViewAlt)
+
+    rootContainer.appendChild(createRootCard(json))
+    rootContainer.isRoot = true
+    rootContainer.style.display = 'flex'
+    rootContainer.isFolded = true
+    rootContainer.style.maxWidth = '20px'
+
+    let foundStage
+    let foundSubject
+    let foundSkill
+
+    function findPathToGivenSkillDetails(json, skillDetailsId) {
+        for (const stage of json.stages) {
+            for (const subject of stage.subjects) {
+                for (const skill of subject.skills) {
+                    if (skill.detailsId === skillDetailsId) {
+                        foundStage = stage
+                        foundSubject = subject
+                        foundSkill = skill
+                        return;
+                    }
+                }
+            }
+        }
+        console.log(`SkillDetails with id: ${skillDetailsId} was not found`)
+    }
+
+    findPathToGivenSkillDetails(json, skillDetailsId)
+
+    createNextCards(stagesContainer, createStageCard, json.stages)
+    createNextCards(subjectsContainer, createSubjectCard, foundStage.subjects)
+    createNextCards(skillsContainer, createSkillCard, foundSubject.skills)
+    createNextCards(skillDetailsContainer, createSkillDetailsCard, Array.of(foundSkill))
+
+    cardContainers.forEach(cardContainer => {
+        cardContainer.style.display = 'flex'
+        cardContainer.querySelectorAll('.card *').forEach(item => item.style.opacity = 1)
+
+        if (cardContainer !== skillDetailsContainer) {
+            cardContainer.isFolded = true
+            cardContainer.style.maxWidth = '40px'
+            let h1s = cardContainer.querySelectorAll('h1');
+            h1s.forEach(h1 => h1.style.display = 'none')
+        }
+    })
 
     return treeViewAlt
 }
